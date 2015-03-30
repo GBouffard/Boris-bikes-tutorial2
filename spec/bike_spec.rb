@@ -11,9 +11,15 @@ describe Bike do
     expect(bike.working).to be false
   end
 
-  xit 'can be fixed once broken' do
+  it 'can be fixed once broken' do
+    bike.break!
+    bike.fix!
+    expect(bike.working).to be true
   end
 
-  xit 'cannot be fixed if it is already working' do
+  it 'cannot be fixed if it is already working' do
+    bike.break!
+    bike.fix!
+    expect { bike.fix! }.to raise_error 'bike already working'   
   end
 end

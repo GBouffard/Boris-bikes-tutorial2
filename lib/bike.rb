@@ -7,4 +7,9 @@ class Bike
   def break!
     @working = false
   end
+
+  def fix!
+    raise 'bike already working' if @working == true
+    @working = true
+  end
 end
