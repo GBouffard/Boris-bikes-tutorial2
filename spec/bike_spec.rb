@@ -2,17 +2,18 @@ require 'bike'
 
 describe Bike do
   bike = Bike.new
-  it "knows that it is working" do
-    expect(bike).to be_working
+  it 'knows that it is working' do
+    expect(bike.working).to be true
   end
 
-  xit "can break" do
+  it 'can break' do
+    bike.break!
+    expect(bike.working).to be false
   end
 
-  xit "can be fixed once broken" do
+  xit 'can be fixed once broken' do
   end
 
   xit 'cannot be fixed if it is already working' do
   end
-
 end
