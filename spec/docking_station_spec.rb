@@ -1,7 +1,9 @@
 require 'docking_station'
 
 describe Docking_station do
-  xit 'can have a default capacity' do
+  ds = Docking_station.new
+  it 'can have a default capacity' do
+    expect(ds.capacity).to eq 20
   end
 
   xit 'can have a custom capacity' do

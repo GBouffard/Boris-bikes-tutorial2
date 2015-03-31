@@ -9,7 +9,7 @@ class Bike
   end
 
   def fix!
-    raise 'bike already working' if @working == true
+    fail 'bike already working' if @working == true
     @working = true
   end
 end
