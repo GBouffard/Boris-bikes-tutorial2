@@ -9,7 +9,11 @@ class DockingStation
     true
   end
 
-  def dock bike
-    @docked_bikes << bike
+  def dock(bike)
+    if bike.working == true || bike.working == false
+      @docked_bikes << bike
+    else
+      fail 'This is not a bike!'
+    end
   end
 end

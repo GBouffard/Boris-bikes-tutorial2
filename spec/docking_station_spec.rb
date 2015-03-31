@@ -16,13 +16,15 @@ describe DockingStation do
   end
 
   it 'dock bikes' do
-    bike = 'working bike'
+    bike = double :bike, working: true
     ds.dock bike
     expect(ds.docked_bikes).to eq [bike]
-  end  
+  end
 
-  xit 'raises an error when you re not docking a bike' do
-    expect(ds).to raise_error 'This is not a bike'
+  it 'raises an error when you re not docking a bike' do
+    bike = double :bike, working: 'yo'
+    allow(bike).to receive(:working).and_return 'yo'
+    expect { ds.dock bike }.to raise_error 'This is not a bike!'
   end
 
   xit 'knows it has working bikes' do
