@@ -15,7 +15,14 @@ describe DockingStation do
     expect(ds).to be_empty
   end
 
+  it 'dock bikes' do
+    bike = 'working bike'
+    ds.dock bike
+    expect(ds.docked_bikes).to eq [bike]
+  end  
+
   xit 'raises an error when you re not docking a bike' do
+    expect(ds).to raise_error 'This is not a bike'
   end
 
   xit 'knows it has working bikes' do
