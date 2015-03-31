@@ -1,2 +1,2 @@
-class Bike_container
+class BikeContainer
 end

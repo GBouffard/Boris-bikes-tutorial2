@@ -1,4 +1,4 @@
-require 'docking_station'
+require 'Docking_station'
 
 describe Docking_station do
   ds = Docking_station.new
@@ -6,7 +6,9 @@ describe Docking_station do
     expect(ds.capacity).to eq 20
   end
 
-  xit 'can have a custom capacity' do
+  it 'can have a custom capacity' do
+    ds2 = Docking_station.new(50)
+    expect(ds2.capacity).to eq 50
   end
 
   xit 'has no bikes when created' do

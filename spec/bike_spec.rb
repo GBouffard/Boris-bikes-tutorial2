@@ -20,6 +20,6 @@ describe Bike do
   it 'cannot be fixed if it is already working' do
     bike.break!
     bike.fix!
-    expect { bike.fix! }.to raise_error 'bike already working'   
+    expect { bike.fix! }.to raise_error 'bike already working'
   end
 end
