@@ -23,7 +23,7 @@ class DockingStation
     @docked_bikes.select(&:working)
   end
 
-  def release(bike)
-    @docked_bikes.pop
-  end
+  # def release(bike)
+  #   @docked_bikes.pop
+  # end
 end
