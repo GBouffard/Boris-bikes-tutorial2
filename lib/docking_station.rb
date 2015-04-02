@@ -1,8 +1,9 @@
 class DockingStation
-  attr_reader :capacity, :docked_bikes
+  attr_reader :capacity, :bikes
+  attr_writer :loaded_bikes
   def initialize(cap = 20)
     @capacity = cap
-    @docked_bikes = []
+    @bikes = []
   end
 
   def empty?
@@ -12,18 +13,19 @@ class DockingStation
   def dock(bike)
     # bike.working ==(true || false) didn't work. Ask teacher.
     if bike.working == true || bike.working == false
-      @docked_bikes << bike
+      @bikes << bike
     else
       fail 'This is not a bike!'
     end
-    @docked_bikes
+    @bikes
   end
 
   def available_bikes
-    @docked_bikes.select(&:working)
+    @bikes.select(&:working)
   end
 
-  # def release(bike)
-  #   @docked_bikes.pop
-  # end
+  def release(bike)
+    @bikes.delete bike
+    # (@loaded_bikes << bike) if bike.working == false
+  end
 end
