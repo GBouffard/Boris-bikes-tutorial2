@@ -5,6 +5,16 @@ describe Van do
   let(:broken_bike) { double :bike, working: false }
   let(:working_bike) { double :bike, working: true }
   let(:ds) { double :dockingStation, bikes: [broken_bike, working_bike] }
+  # DOUBLES
+  # The only thing we give to doubles are methods that returns values when
+  # called. It's part of the doubles.
+
+  # let(:ds) { double :dockingStation, bikes: [broken_bike, working_bike]
+  # ds.bikes or calling bikes from ds corresponds to [broken_bike, working_bike]
+  # it works when we do station.bikes, since we use the double ds as argument
+  #
+  # same thing for broken_bike; when working is called:, it returns false.
+
   it 'can have a default capacity' do
     expect(van.capacity).to eq 20
   end
@@ -15,41 +25,33 @@ describe Van do
   end
 
   it 'can load a bike' do
+    # always with :symbol
     van.load(:broken_bike)
     expect(van.loaded_bikes).to eq [:broken_bike]
   end
 
   it 'should be able to collect broken bikes from a station' do
     allow(ds).to receive(:release)
+    # in that test, :release is just allowed. It doesn't do anything.
     van.collect_bikes_from(ds)
     expect(van.loaded_bikes).to eq [broken_bike]
-    # need to FRAME
   end
 
-  xit 'should be able to remove broken bikes from a station when collecting' do
-    allow(ds).to receive(:collect_bikes_from).with :bikes
-    allow(ds).to receive(:release).with :bikes
-    expect(ds.available_bikes).to eq [working_bike]
-    van.collect_bikes_from(ds) # we need to put all the allows BEFORE
-    # running the method for this to return something
-    
-    # ds.available_bikes
-    # action done on the class docking station, with the class bike.
-    # I didn't understand this at first. What it means is that we have a
-    # ds, with a broken bike and working bike. We EXPECT the STATION to
-    # release the bike; we expect something, an ACTION to happen on DS, not van
-    # but it depends on a method that we run on van. That's why it's like that:
-    # NEED TO FRAME / HAD TO LOOK
-
-    # expect(ds).to receive(:remove).with bikes:
-    # van.collect_bikes_from ds
-
-    # Steve - SESSION 4, then I can look at modules.
-    # Integration test - 6min
-    # docking_station = double :docking_station, bikes: [bike, broken_bike]
-    # expect(docking_station).to receive(:release).with broken_bike
-    # van.collect_broken_bikes_from docking_station
-    # #
+  # INTEGRATION TEST vs UNIT TESTS
+  it 'should be able to remove broken bikes from a station when collecting' do
+    # This test is the one I wanted to do in the first place and it makes
+    # perfect sense.
+    #
+    # expect(ds.bikes).to eq [working_bike]
+    #
+    # HOWEVER, it's bound to fail: the state of a double CANNOT CHANGE!
+    # ds.bikes will always corresponds to [broken_bike, working_bike]
+    # We need to think another way and to do that, we just chech that the
+    # release method on ds works. We use a expect to check that it does.
+    expect(ds).to receive(:release)
+    van.collect_bikes_from(ds)
+    # Also, the order of things is important. we need to have the allows and
+    # expects on doubles running before we call the methods
   end
 
   xit 'should be able to drop of bikes to a garage' do

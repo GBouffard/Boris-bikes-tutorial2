@@ -26,6 +26,5 @@ class DockingStation
 
   def release(bike)
     @bikes.delete bike
-    # (@loaded_bikes << bike) if bike.working == false
   end
 end
