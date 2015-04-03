@@ -54,7 +54,7 @@ describe Van do
     # Also, the order of things is important. we need to have the allows and
     # expects on doubles running before we call the methods
   end
-  
+
   it 'should remove bikes from self once dropped off' do
     van.load(:broken_bike)
     van.drop_off(:broken_bike)
@@ -67,5 +67,4 @@ describe Van do
     van.drop_off(:broken_bike)
     expect(garage.bikes).to eq [broken_bike]
   end
-
 end

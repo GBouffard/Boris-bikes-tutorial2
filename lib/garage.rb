@@ -6,9 +6,13 @@ class Garage
 
   def dock(bike)
     @bikes << bike
-    bike.fix!
-    release(bike)
   end
+
+  def fix_a_bike(bike)
+    bike.fix!
+  end
+  # release(bike)
+
   # MY MISTAKE: I was trying this to change the bike status
   # def fix!
   #   bike.working = true

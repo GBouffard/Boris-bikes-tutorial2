@@ -28,6 +28,7 @@ class Van
   end
 
   def drop_off(bike)
+    # garage.bikes << bike
     @loaded_bikes.delete(bike)
   end
 end
