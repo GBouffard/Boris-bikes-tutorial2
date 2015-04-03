@@ -54,14 +54,18 @@ describe Van do
     # Also, the order of things is important. we need to have the allows and
     # expects on doubles running before we call the methods
   end
+  
+  it 'should remove bikes from self once dropped off' do
+    van.load(:broken_bike)
+    van.drop_off(:broken_bike)
+    expect(van.loaded_bikes).to eq []
+  end
 
   xit 'should be able to drop off bikes to a garage' do
     # test cannot be done before all units test are done. Didn't do garage.
     van.load(:broken_bike)
-    expect(garage).to receive [:transfer]
-    van.transfer(:broken_bike)
+    van.drop_off(:broken_bike)
+    expect(garage.bikes).to eq [broken_bike]
   end
 
-  xit 'should remove bikes from self once dropped off' do
-  end
 end

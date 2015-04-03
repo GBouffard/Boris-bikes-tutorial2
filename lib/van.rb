@@ -5,10 +5,6 @@ class Van
     @loaded_bikes = []
   end
 
-  def load(bike)
-    @loaded_bikes << bike
-  end
-
   def collect_bikes_from(station)
     # @bikes is an instance variable in docking_station, an array.
     # that's actually why we call it station.bikes and station is the
@@ -25,5 +21,13 @@ class Van
     # MY MISTAKE AT FIRST I WAS USING station.release(bike)
     # outside of the do..end loop so my method was not recognizing
     # bike
+  end
+
+  def load(bike)
+    @loaded_bikes << bike
+  end
+
+  def drop_off(bike)
+    @loaded_bikes.delete(bike)
   end
 end
