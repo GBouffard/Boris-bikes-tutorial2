@@ -5,6 +5,7 @@ describe Van do
   let(:broken_bike) { double :bike, working: false }
   let(:working_bike) { double :bike, working: true }
   let(:ds) { double :dockingStation, bikes: [broken_bike, working_bike] }
+  let(:garage) { double :garage }
   # DOUBLES
   # The only thing we give to doubles are methods that returns values when
   # called. It's part of the doubles.
@@ -54,7 +55,11 @@ describe Van do
     # expects on doubles running before we call the methods
   end
 
-  xit 'should be able to drop of bikes to a garage' do
+  xit 'should be able to drop off bikes to a garage' do
+    # test cannot be done before all units test are done. Didn't do garage.
+    van.load(:broken_bike)
+    expect(garage).to receive [:transfer]
+    van.transfer(:broken_bike)
   end
 
   xit 'should remove bikes from self once dropped off' do
