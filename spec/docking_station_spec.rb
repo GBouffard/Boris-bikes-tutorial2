@@ -27,8 +27,8 @@ describe DockingStation do
   end
 
   it 'knows it has working bikes' do
-    # MY MISTAKE HER WAS TO NOT USE A LET FOR DOCKING STATION DOUBLE
-    # Or as Sam sugested, to use subject.
+    # MY MISTAKE HERE WAS TO NOT USE A LET FOR DOCKING STATION DOUBLE
+    # Sam sugested I could use subject, or a double.
     # Failure/Error: Double was originally created in one example but has
     # leaked into another example and can no longer be used.
     # rspec-mocks' doubles are designed to only last for one example,
