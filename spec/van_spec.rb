@@ -59,7 +59,7 @@ describe Van do
     # NB: for the 2 drop offs test, we won't care if bikes are working or not.
     van.load(working_bike)
     van.load(broken_bike)
-    2.times { expect(garage).to receive(:dock) }
+    expect(garage).to receive(:dock)
     #                                   ^ :only indispensables on methods.
     van.drop_off_to(garage)
   end
@@ -74,7 +74,7 @@ describe Van do
   it 'should be able to drop off fixed bikes to a station' do
     van.load(working_bike)
     van.load(broken_bike)
-    2.times { expect(ds).to receive(:dock) }
+    expect(ds).to receive(:dock)
     van.drop_off_to(ds)
   end
 

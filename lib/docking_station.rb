@@ -25,6 +25,6 @@ class DockingStation
   end
 
   def release(bike)
-    @bikes.delete bike
+    @bikes.delete(bike)
   end
 end

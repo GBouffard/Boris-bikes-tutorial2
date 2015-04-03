@@ -33,7 +33,7 @@ class Van
   end
 
   def drop_off_to(location)
-    location.bikes.each do |bike|
+    @loaded_bikes.each do |bike|
       location.dock(bike)
       release(bike)
     end
