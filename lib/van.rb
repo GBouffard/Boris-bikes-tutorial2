@@ -23,13 +23,20 @@ class Van
     # bike
   end
 
+  def collect_fixed_bikes_from(garage)
+    garage.bikes.each do |bike|
+      garage.release(bike) if bike.working
+      load(bike) if bike.working
+    end
+  end
+
   def load(bike)
     @loaded_bikes << bike
   end
 
-  def drop_off_to(garage)
-    garage.bikes.each do |bike|
-      garage.dock(bike)
+  def drop_off_to(location)
+    location.bikes.each do |bike|
+      location.dock(bike)
       release(bike)
     end
   end

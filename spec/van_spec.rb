@@ -5,7 +5,7 @@ describe Van do
   let(:broken_bike) { double :bike, working: false }
   let(:working_bike) { double :bike, working: true }
   let(:ds) { double :dockingStation, bikes: [broken_bike, working_bike] }
-  let(:garage) { double :garage, bikes: [broken_bike] }
+  let(:garage) { double :garage, bikes: [broken_bike, working_bike] }
   # DOUBLES
   # The only thing we give to doubles are methods that returns values when
   # called. It's part of the doubles.
@@ -40,6 +40,8 @@ describe Van do
     expect(van.loaded_bikes).to eq [:broken_bike]
   end
 
+  # All the simple unit tests need to be done before we move to integrations.
+
   it 'should be able to collect broken bikes from a station' do
     allow(ds).to receive(:release)
     # in that test, :release is just allowed. It doesn't do anything.
@@ -65,9 +67,11 @@ describe Van do
   end
 
   it 'should be able to drop off bikes to a garage' do
-    # All the simple unit tests need to be done before we move to integrations.
+    # for the 2 drop offs test, we won't care if bikes are working or not.
+    # we will test that it drops off what's in there.
+    van.load(working_bike)
     van.load(broken_bike)
-    expect(garage).to receive(:dock)
+    2.times { expect(garage).to receive(:dock) }
     van.drop_off_to(garage)
   end
 
@@ -76,5 +80,18 @@ describe Van do
     allow(garage).to receive(:dock)
     van.drop_off_to(garage)
     expect(van.loaded_bikes).to eq []
+  end
+
+  it 'should be able to drop off fixed bikes to a station' do
+    van.load(working_bike)
+    van.load(broken_bike)
+    2.times { expect(ds).to receive(:dock) }
+    van.drop_off_to(ds)
+  end
+
+  it 'should be able to collect fixed bikes from a garage' do
+    van.load(working_bike)
+    expect(garage).to receive(:release)
+    van.collect_fixed_bikes_from(garage)
   end
 end
