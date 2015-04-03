@@ -27,8 +27,14 @@ class Van
     @loaded_bikes << bike
   end
 
-  def drop_off(bike)
-    # garage.bikes << bike
+  def drop_off_to(garage)
+    garage.bikes.each do |bike|
+      garage.dock(bike)
+      release(bike)
+    end
+  end
+
+  def release(bike)
     @loaded_bikes.delete(bike)
   end
 end

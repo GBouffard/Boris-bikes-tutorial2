@@ -5,7 +5,7 @@ describe Van do
   let(:broken_bike) { double :bike, working: false }
   let(:working_bike) { double :bike, working: true }
   let(:ds) { double :dockingStation, bikes: [broken_bike, working_bike] }
-  let(:garage) { double :garage }
+  let(:garage) { double :garage, bikes: [broken_bike] }
   # DOUBLES
   # The only thing we give to doubles are methods that returns values when
   # called. It's part of the doubles.
@@ -14,7 +14,16 @@ describe Van do
   # ds.bikes or calling bikes from ds corresponds to [broken_bike, working_bike]
   # it works when we do station.bikes, since we use the double ds as argument
   #
-  # same thing for broken_bike; when working is called:, it returns false.
+  # another point is that bikes: need to point to the doubles, not as symbols
+  # else tests won't work.
+  # let(:garage) { double :garage, bikes: broken_bike }
+  # NOT let(:garage) { double :garage, bikes: :broken_bike }
+  #
+  # if we want to iterrate over it, like done with each, it needs to be in an
+  # array. let(:garage) { double :garage, bikes: [broken_bike] }
+  #
+  # for true and false, its simply
+  # let(:broken_bike) { double :bike, working: false }
 
   it 'can have a default capacity' do
     expect(van.capacity).to eq 20
@@ -55,16 +64,17 @@ describe Van do
     # expects on doubles running before we call the methods
   end
 
-  it 'should remove bikes from self once dropped off' do
-    van.load(:broken_bike)
-    van.drop_off(:broken_bike)
-    expect(van.loaded_bikes).to eq []
+  it 'should be able to drop off bikes to a garage' do
+    # All the simple unit tests need to be done before we move to integrations.
+    van.load(broken_bike)
+    expect(garage).to receive(:dock)
+    van.drop_off_to(garage)
   end
 
-  xit 'should be able to drop off bikes to a garage' do
-    # test cannot be done before all units test are done. Didn't do garage.
-    van.load(:broken_bike)
-    van.drop_off(:broken_bike)
-    expect(garage.bikes).to eq [broken_bike]
+  it 'should remove bikes from self once dropped off' do
+    van.load(broken_bike)
+    allow(garage).to receive(:dock)
+    van.drop_off_to(garage)
+    expect(van.loaded_bikes).to eq []
   end
 end
