@@ -1,6 +1,6 @@
 require 'capybara/rspec'
 require 'bike'
-require 'Docking_station'
+require 'docking_station'
 require 'garage'
 require 'van'
 
@@ -9,7 +9,7 @@ feature '8 bikes station. 7 users take some. 2 come back broken' do
     ds = DockingStation.new(8)
     van = Van.new
     garage = Garage.new
-    # Is there a better way to iterrate for these actions?
+    # Is there a better way to iterrate all of these than write all these lines?
     bike1 = Bike.new
     ds.dock(bike1)
     bike2 = Bike.new
@@ -53,11 +53,13 @@ feature '8 bikes station. 7 users take some. 2 come back broken' do
     van.collect_bikes_from(ds)
     expect(van.loaded_bikes.length).to eq 2
     van.drop_off_to(garage)
+    # Steve, this is where I have a problem!
     # expect(van.loaded_bikes.length).to eq 0
     # I get 1
     # expect(garage.bikes.length).to eq 2
     # I get 1
-    # drop_off_to doesn't seem to iterrate through the array. No idea why!
+    # drop_off_to doesn't seem to iterrate through the array.
+    # I have no idea why! I thought the code was right.
     # Units tests are passing.
   end
 end

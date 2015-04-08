@@ -12,7 +12,7 @@ describe Garage do
   it 'fixes a bike once docked' do
     garage.dock(bike_to_fix)
     # we cannot check bike.working = true after we fixed it as it's a state
-    # if the bike class and a double never changes its state.
+    # in the bike class and a double never changes its state.
     expect(bike_to_fix).to receive(:fix!)
     garage.fix_a_bike(bike_to_fix)
     # AT FIRST I HAD AN ERROR: can't define Singleton

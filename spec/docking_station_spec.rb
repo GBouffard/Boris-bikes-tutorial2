@@ -1,4 +1,4 @@
-require 'Docking_station'
+require 'docking_station'
 
 describe DockingStation do
   let(:bike) { double :bike, working: true }
